@@ -1,0 +1,45 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+    <block type="text_print" id="!A-1xebkaCV)f~+]SbPd" x="49" y="170">
+        <value name="TEXT">
+            <block type="text" id="gHXgpqM-wjHEsy)N#|(8">
+                <field name="TEXT">hello world</field>
+            </block>
+        </value>
+        <next>
+            <block type="text_print" id="?f2j2:ix{RjXS_y.d.{d">
+                <value name="TEXT">
+                    <block type="math_number" id=",hmk]t2p@J%i7@$TA)@q">
+                        <field name="NUM">123</field>
+                    </block>
+                </value>
+            </block>
+        </next>
+    </block>
+    <block type="text_print" id="ne2*@!x-1bF282}ExBwf" x="47" y="287">
+        <value name="TEXT">
+            <block type="logic_compare" id="c3M`xa-hig*fcAQ*D[=Q">
+                <field name="OP">EQ</field>
+                <value name="A">
+                    <block type="math_arithmetic" id="70XSaj?PQd#Y3@if;ACK">
+                        <field name="OP">ADD</field>
+                        <value name="A">
+                            <block type="math_number" id="#9y/%yiA;mxlZa0Y{,+K">
+                                <field name="NUM">1</field>
+                            </block>
+                        </value>
+                        <value name="B">
+                            <block type="math_number" id="=D;bgA`^?mC%cwNV~,x0">
+                                <field name="NUM">2</field>
+                            </block>
+                        </value>
+                    </block>
+                </value>
+                <value name="B">
+                    <block type="math_number" id="O,zUR5Ti*vu6|bT#pHn1">
+                        <field name="NUM">3</field>
+                    </block>
+                </value>
+            </block>
+        </value>
+    </block>
+</xml>

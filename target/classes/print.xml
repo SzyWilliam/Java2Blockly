@@ -1,0 +1,47 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+    <block type="text_print" id="gJOg^6LC4:jc2s[l_2N+" x="52" y="332">
+        <value name="TEXT">
+            <block type="text" id="oF}P)LXA]P%HmGYO2her">
+                <field name="TEXT">this is a text</field>
+            </block>
+        </value>
+        <next>
+            <block type="text_print" id="oB$F#PF?$:Nh8enlRK{l">
+                <value name="TEXT">
+                    <block type="math_number" id="Y)I~v{*Yj1/2T?^(Y}yu">
+                        <field name="NUM">12</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="text_print" id="?g@QTw?G#I:Ib!P^hIn0">
+                        <value name="TEXT">
+                            <block type="logic_compare" id="Ae]EGQXE@j8Aa%5v}q[}">
+                                <field name="OP">EQ</field>
+                                <value name="A">
+                                    <block type="math_arithmetic" id="m`1Zj~.n@KVEFKY1?$b4">
+                                        <field name="OP">MULTIPLY</field>
+                                        <value name="A">
+                                            <block type="math_number" id="O,C3SUovM-u(Nd?#m7AW">
+                                                <field name="NUM">2</field>
+                                            </block>
+                                        </value>
+                                        <value name="B">
+                                            <block type="math_number" id="Jn(FoOMa=G,:=u,xZ_ob">
+                                                <field name="NUM">3</field>
+                                            </block>
+                                        </value>
+                                    </block>
+                                </value>
+                                <value name="B">
+                                    <block type="math_number" id=".sep#FD/hAnPsN9FAOAC">
+                                        <field name="NUM">6</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </value>
+                    </block>
+                </next>
+            </block>
+        </next>
+    </block>
+</xml>

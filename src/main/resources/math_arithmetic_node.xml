@@ -1,0 +1,38 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+    <block type="math_arithmetic" id="kEM-l?saK!c*to)OC25D" x="65" y="260">
+        <field name="OP">ADD</field>
+        <value name="A">
+            <block type="math_number" id="c5R{{/S]E5[2z[vEe79f">
+                <field name="NUM">1</field>
+            </block>
+        </value>
+        <value name="B">
+            <block type="math_number" id="~R11dx!*0INIHuy)=YJV">
+                <field name="NUM">2</field>
+            </block>
+        </value>
+    </block>
+    <block type="math_arithmetic" id="{(I6JCVFL[8zKExLnc)G" x="63" y="335">
+        <field name="OP">ADD</field>
+        <value name="A">
+            <block type="math_number" id="Cr~Xz%NzR$|^U`[(yqrH">
+                <field name="NUM">3</field>
+            </block>
+        </value>
+        <value name="B">
+            <block type="math_arithmetic" id="BwBf,i6jPCu^1F#8ntsx">
+                <field name="OP">MULTIPLY</field>
+                <value name="A">
+                    <block type="math_number" id="Y[1-$sS*U(PrYJjp$AGo">
+                        <field name="NUM">4</field>
+                    </block>
+                </value>
+                <value name="B">
+                    <block type="math_number" id="59Moet3aWVM4wEA-GTpf">
+                        <field name="NUM">5</field>
+                    </block>
+                </value>
+            </block>
+        </value>
+    </block>
+</xml>

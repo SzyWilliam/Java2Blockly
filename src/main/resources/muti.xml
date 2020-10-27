@@ -1,0 +1,62 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="math_number" id="CQBRCM#t;6FX0v6E]hb(" x="173" y="0">
+    <field name="NUM">123</field>
+  </block>
+  <block type="text_print" id="bT-+d@@d:3bf;-(r9z.J" x="176" y="46"></block>
+  <block type="text_print" id="eu)O)F+oZv|NSkB).:)j" x="167" y="107">
+    <value name="TEXT">
+      <block type="text" id="9:*/wB}arhI}3yS1-Z45">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+  </block>
+  <block type="math_arithmetic" id="|o0*^OcetWwqyE^ZAf7g" x="139" y="122">
+    <field name="OP">ADD</field>
+    <value name="A">
+      <block type="math_number" id="0SLh3Ev2}gADI[^MMJd2">
+        <field name="NUM">1</field>
+      </block>
+    </value>
+    <value name="B">
+      <block type="math_number" id="$r9bO-;haco*_O4dVSK0">
+        <field name="NUM">2</field>
+      </block>
+    </value>
+  </block>
+  <block type="logic_compare" id="8?Ed*.=ypAxI:h1X3fVu" x="139" y="228">
+    <field name="OP">GTE</field>
+    <value name="A">
+      <block type="math_number" id="VH/RsU$Q^9Hx_pf,1QTU">
+        <field name="NUM">12</field>
+      </block>
+    </value>
+    <value name="B">
+      <block type="math_number" id="7HCQ%nW)sDt?Jz@WM^k=">
+        <field name="NUM">6</field>
+      </block>
+    </value>
+  </block>
+  <block type="logic_compare" id="#/FjcTK8)uLX1OTom5yD" x="62" y="325">
+    <field name="OP">GTE</field>
+    <value name="A">
+      <block type="math_arithmetic" id="_vcjvGs$Zl97AW8CQgIk">
+        <field name="OP">ADD</field>
+        <value name="A">
+          <block type="math_number" id="VBHHO1?!+Rl7#|Vd0w6U">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <value name="B">
+          <block type="math_number" id="18C/WAAB:|W;-hv=?{oe">
+            <field name="NUM">2</field>
+          </block>
+        </value>
+      </block>
+    </value>
+    <value name="B">
+      <block type="math_number" id="mGK#JLy{}vL1?!:nm/@d">
+        <field name="NUM">6</field>
+      </block>
+    </value>
+  </block>
+</xml>
