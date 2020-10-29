@@ -1,3 +1,5 @@
+package parserTool;
+
 import core.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -7,6 +9,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Parser {
 
@@ -24,34 +27,36 @@ public class Parser {
 
         for(int i = 1; i <= childNum - 2; i += 2){
             Node currChild = nodeList.item(i);
-            res.add(parseNodeToJavaCode(currChild)); // parse each node to java code and add to res list
+            res.add(parseNodeToBlockNode(currChild, null).toJavaCode()); // parse each node to java code and add to res list
         }
         return res;
     }
 
-    private static String parseNodeToJavaCode(Node node){
+    public static Block_node parseNodeToBlockNode(Node node, Set<String> validTypeSet){
         String type = node.getAttributes().getNamedItem("type").getTextContent();
-        String res;
+        if(validTypeSet != null && !validTypeSet.contains(type)){
+            return new Blank_node();
+        }
+        Block_node res = new Blank_node();;
         // reflection should be used to replace this switch
         switch(type){
             case "text":
-                res = Text_node.text_node_factory(node).toJavaCode();
+                res = Text_node.text_node_factory(node);
                 break;
             case "math_number":
-                res = Math_number_node.math_number_node_factory(node).toJavaCode();
+                res = Math_number_node.math_number_node_factory(node);
                 break;
             case "math_arithmetic":
-                res = Math_arithmetic_node.math_arithmetic_node_factory(node).toJavaCode();
+                res = Math_arithmetic_node.math_arithmetic_node_factory(node);
                 break;
             case "logic_compare":
-                res = Logic_compare_node.logic_compare_node_factory(node).toJavaCode();
+                res = Logic_compare_node.logic_compare_node_factory(node);
                 break;
             case "text_print":
-                res = Text_print_node.text_print_node_factory(node).toJavaCode();
+                res = Text_print_node.text_print_node_factory(node);
                 break;
             default:
-                System.out.println("unknown type");
-                res = "UNKNOWN";
+                break;
         }
         return res;
     }
