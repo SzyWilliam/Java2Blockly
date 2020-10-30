@@ -1,0 +1,38 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+    <block type="logic_compare" id="tX$~K.|dY)p@6cEL:Fe2" x="87" y="228">
+        <field name="OP">LTE</field>
+        <value name="A">
+            <block type="math_number" id="c=H+o{:j-g,z`c|4J9jn">
+                <field name="NUM">3</field>
+            </block>
+        </value>
+        <value name="B">
+            <block type="math_number" id="9[9y-La#S)r/caPA}hRW">
+                <field name="NUM">5</field>
+            </block>
+        </value>
+    </block>
+    <block type="logic_compare" id="1y}}%w_%_^NQ!FqnIVxv" x="83" y="298">
+        <field name="OP">NEQ</field>
+        <value name="A">
+            <block type="math_number" id="Q%a1,Hpp8[{vWY8{f%FS">
+                <field name="NUM">12</field>
+            </block>
+        </value>
+        <value name="B">
+            <block type="math_arithmetic" id=",+Ky31XKWU0PV`Wdd)#(">
+                <field name="OP">ADD</field>
+                <value name="A">
+                    <block type="math_number" id="|449Cpb+MwI:{zw2/$go">
+                        <field name="NUM">3</field>
+                    </block>
+                </value>
+                <value name="B">
+                    <block type="math_number" id="i:tK7|EsOI3XPy:n%U_/">
+                        <field name="NUM">4</field>
+                    </block>
+                </value>
+            </block>
+        </value>
+    </block>
+</xml>

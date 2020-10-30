@@ -1,0 +1,9 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+    <block type="text" id="fk@q(sG1dJAUAh`Fy3*X" x="103" y="290">
+        <field name="TEXT">abcd</field>
+    </block>
+
+    <block type="text" id="fk@q(sG1dJAUAh`Fy3*X" x="103" y="290">
+        <field name="TEXT">efgh</field>
+    </block>
+</xml>

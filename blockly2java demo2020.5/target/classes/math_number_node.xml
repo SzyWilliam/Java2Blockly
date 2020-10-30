@@ -1,0 +1,11 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+    <block type="math_number" id="iR-ryVWs-m_|20FFccYp" x="193" y="205">
+        <field name="NUM">111</field>
+    </block>
+    <block type="math_number" id="Rm_G^-k:FUO(AE@DLmgM" x="185" y="271">
+        <field name="NUM">222</field>
+    </block>
+    <block type="math_number" id="ph]Uu1|%(0R;wvg%GqbP" x="193" y="344">
+        <field name="NUM">333</field>
+    </block>
+</xml>
