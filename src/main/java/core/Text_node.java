@@ -3,7 +3,6 @@ package core;
 import org.w3c.dom.Node;
 
 public class Text_node implements Block_node {
-
     private String text;
     public Text_node(String text){
         this.text = text;

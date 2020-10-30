@@ -53,6 +53,4 @@ class ParserTest {
         assertEquals("System.out.println(\"hello world\");\nSystem.out.println(123);\n", res.get(0));
         assertEquals("System.out.println((1 + 2) == 3);\n", res.get(1));
     }
-
-
 }
