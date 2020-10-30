@@ -49,8 +49,8 @@ public class Math_arithmetic_node implements Block_node {
     @Override
     public String toJavaCode() {
         String opToJava = "";
-        String a = " ";
-        String b = " ";
+        String a = "";
+        String b = "";
 
         if (val_A != null) {
             a = val_A.toJavaCode();
@@ -61,16 +61,16 @@ public class Math_arithmetic_node implements Block_node {
 
         switch (op) {
             case "ADD":
-                opToJava = "(" + a + "+" + b + ")";
+                opToJava = "(" + a + " + " + b + ")";
                 break;
             case "MINUS":
-                opToJava = "(" + a + "-" + b + ")";
+                opToJava = "(" + a + " - " + b + ")";
                 break;
             case "MULTIPLY":
-                opToJava = "(" + a + "*" + b + ")";
+                opToJava = "(" + a + " * " + b + ")";
                 break;
             case "DIVIDE":
-                opToJava = "(" + a + "/" + b + ")";
+                opToJava = "(" + a + " / " + b + ")";
                 break;
             case "POWER":
                 opToJava = "Math.pow(" + a + ", " + b + ")";

@@ -50,8 +50,8 @@ public class Logic_compare_node implements Block_node {
     @Override
     public String toJavaCode() {
         String opToJava = "";
-        String a = " ";
-        String b = " ";
+        String a = "";
+        String b = "";
 
         if (val_A != null) {
             a = val_A.toJavaCode();
@@ -68,42 +68,42 @@ public class Logic_compare_node implements Block_node {
                 if (aIsString && bIsString) {
                     opToJava = a + ".equals(" + b + ")";
                 } else {
-                    opToJava = "(" + a + "==" + b + ")";
+                    opToJava = "(" + a + " == " + b + ")";
                 }
                 break;
             case "NEQ":
                 if (aIsString && bIsString) {
                     opToJava = "(!" + a + ".equals(" + b + "))";
                 } else {
-                    opToJava = "(" + a + "!=" + b + ")";
+                    opToJava = "(" + a + " != " + b + ")";
                 }
                 break;
             case "LT":
                 if (aIsString && bIsString) {
                     opToJava = "(" + a + ".compareTo(" + b + ") < 0)";
                 } else {
-                    opToJava = "(" + a + "<" + b + ")";
+                    opToJava = "(" + a + " < " + b + ")";
                 }
                 break;
             case "LTE":
                 if (aIsString && bIsString) {
                     opToJava = "(" + a + ".compareTo(" + b + ") <= 0)";
                 } else {
-                    opToJava = "(" + a + "<=" + b + ")";
+                    opToJava = "(" + a + " <= " + b + ")";
                 }
                 break;
             case "GT":
                 if (aIsString && bIsString) {
                     opToJava = "(" + a + ".compareTo(" + b + ") > 0)";
                 } else {
-                    opToJava = "(" + a + ">" + b + ")";
+                    opToJava = "(" + a + " > " + b + ")";
                 }
                 break;
             case "GTE":
                 if (aIsString && bIsString) {
                     opToJava = "(" + a + ".compareTo(" + b + ") >= 0)";
                 } else {
-                    opToJava = "(" + a + ">=" + b + ")";
+                    opToJava = "(" + a + " >= " + b + ")";
                 }
                 break;
         }
