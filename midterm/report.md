@@ -57,41 +57,100 @@ https://developers.google.com/blockly/guides/overview
 
 
 
-## 项目的分析和总体介绍（潘星宇，朱晓萱，宋子阳）
+## 项目的分析和总体介绍（宋子阳，俞哲轩）
 
 ### 使用场景
 
-```
-通过一个例子来阐述（神经网络的搭建） 这一部分通过P图完成
-1. 用Blockly Factory建立 Affine ReLU Convolutional SoftMax的网络，输入输出可以自己定义，要求
-		网络可以拼在一起
-		网络的接受参数要合理（例如接受Input size和Output size）
-2. 建立一个workspace， 将上述的网络Block放在ToolBox的同一个Category上
-3. 使用这些Block在workspace里搭建一个神经网络架构
-4. 描述上述过程并且配图
+在许多任务驱动型的项目中，往往会要求工作人员进行一定量的技术性工作，以完成某些目标。但是这些技术性的工作，往往都是功能性的、且对于非专业人士来说，具有一定的上手难度——譬如编写一个网页爬虫脚本、搭建一个轻量级神经网络、制作一个简易的网页小游戏等。
+
+我们期望将这些技术性工作“抽象化”、“模块化”、“Blockly化”，将程序复杂的代码实现，浓缩于一个个小巧精美的blockly积木中，允许我们的用户在没有太多编程基础的前提下，只要对于自己的任务有清晰的认识，即可用积木“搭建”出他需要的程序，并且成功运行、取得他所希望的结果。
+
+让我们亲自来搭建一个**卷积神经网络**，看看用代码一步步实现对比用积木一块块搭建的区别：
+
+对于一个标准化的CNN，通常需要`“Convolution - ReLU - Pooling - Affine - ReLU - Affine - Softmax”`一共七层，为了描述的简单化，我们采用如下五层结构`“Convolution - ReLU - Pooling - Affine - Softmax”`来构建我们的`“SimpleConvNet”`
+
+如果用Python代码构建框架，其大致结构如下：
+
+```python
+class SimpleConvNet:
+    def __init__(self, input_dim=(1, 28, 28),
+                 conv_param={'filter_num':30, 'filter_size':5,
+                             'pad':0, 'stride':1},
+                 hidden_size=100, output_size=10, weight_init_std=0.01):
+      
+        # get initial parameter from conv_param
+        filter_num = conv_param['filter_num']
+        filter_size = conv_param['filter_size']
+        filter_pad = conv_param['pad']
+        filter_stride = conv_param['stride']
+        input_size = input_dim[1]
+        conv_output_size = (input_size - filter_size + 2*filter_pad) / \
+                            filter_stride + 1
+        pool_output_size = int(filter_num * (conv_output_size/2) *
+                               (conv_output_size/2))
+        
+        # initialize weights and biases
+        self.params = {}
+				self.params['W1'] = weight_init_std * \
+                    np.random.randn(filter_num, input_dim[0],
+                                    filter_size, filter_size)
+				self.params['b1'] = np.zeros(filter_num)
+				self.params['W2'] = weight_init_std * \
+                    np.random.randn(pool_output_size,
+                                    hidden_size)
+				self.params['b2'] = np.zeros(hidden_size)
+        
+        # build layers of the neural network
+        self.layers = OrderedDict()
+				self.layers['Conv1'] = Convolution(self.params['W1'],
+                                   self.params['b1'],
+                                   conv_param['stride'],
+                                   conv_param['pad'])
+
+				self.layers['Relu1'] = Relu()
+				self.layers['Pool1'] = Pooling(pool_h=2, pool_w=2, stride=2)
+				self.layers['Affine1'] = Affine(self.params['W2'],
+                              self.params['b2'])
+				self.last_layer = softmaxwithloss()
 ```
 
+而如果我们采用Blockly搭建我们的神经网络，其大致结构如下：
 
+<img src="image/CNN-1.jpeg" alt="CNN-1" style="zoom: 67%;" />
+
+也就是说，只需要我们的使用者，清楚一个卷积神经网络需要哪些层来构成，然后依次拖动我们的积木块拼接起来，输入各种块预先定义好，由使用者自行设定的参数（例如`input size`、`padding`、`stride`等），就可以成功搭建一个神经网络——而且，“Blockly神经网络“也足够强大，能够完成大部分“代码神经网络”需要完成的任务，因为，每一块Blockly的背后也是代码。
+
+我们会为我们的项目，搭建一个**公共平台（Public Workspace）**，允许使用者自由地使用已经封装好的各种积木，去实现他们所需要完成的任务。我们也会为各种特定任务，建立各类**“Blockly仓库”**，里面**专门**存放完成这项任务，可能会需要的各种积木块。让我们继续以搭建卷积神经网络为例：
+
+<img src="image/CNN-2.jpeg" alt="CNN-2" style="zoom:67%;" />
+
+我们会在**Workspace**中，专门开辟一个**Neural Network Category**，将所有用来搭建神经网络的块放在其中，如`Affine`、`ReLU`、`Convolutional`、`Max Pooling`、`Softmax`、`Sigmoid`、`Tanh`等——只要你可能会使用到的，我们都会提供。而使用者，只需要拖动积木块，拼接在一起，输入必须的参数，就完成了搭建一个性能优越的神经网络。
 
 ### 目标用户
 
+至此，你可能不禁会产生这样的疑问：“那这些预先定义好的积木块是哪里来的呢？难道全部都是我们项目组自行定义的吗？那维护成本不会很高吗？”
+
+我们项目组确实会预先定义一些常用的功能块，但是这显然会被局限在一个较小的范围内，也无法为更多特定功能提供预定义好的积木块。而如果采取不断更新补充的方式的话，又会使工作量大大增加，且效率不高。
+
+因而，我们会提供一个**公共开发平台（Public Block Factory）**，允许既熟悉代码语法，又对Blockly开发有简单了解、或是乐意花简短的时间做了解的开发者，设计并上传自己定义的积木块。在我们项目组进行测试和审核之后，会加入相关任务的**Category**或者新建全新的**Category**用于添加这些新加入的积木块进入**Public Workspace**。
+
 #### 开发者
 
-```
-开发者将如何定义一个Affine网络？
-通过Java代码先定义底层的代码和结构？
-在Java上写完了代码之后怎么变成Blockly？我们的转换器：配置文件
-```
+开发者该如何自定义一个代码块呢？让我们以卷积神经网络中的**Softmax Layer**为例：
+
+<img src="image/CNN-3.jpeg" alt="CNN-3" style="zoom: 50%;" />
+
+1. 开发者先用程序语言定义底层的代码和结构（目前支持`Java`），包括类的字段、构造方法以及其它方法；
+2. 构建完以`Java`为基础的代码之后，通过**配置文件**转化成Blockly积木块
+3. 我们把***Java Code***转化为***Json***对象，通过***Json***对象再重构出***Blockly***
+
+（实现细节请参见：下一部分—一个Java转Block的代码示例）
 
 #### 使用者
 
-```
-使用者的相关内容较为简单，和使用场景大部分相同
-```
+对于使用者来说，使用Blockly积木块开发应用程序非常简单，只需要在我们提供的**公共平台（Public Workspace）**上找到自己任务相关的积木块，根据程序逻辑逐块搭建，输入要求的相关参数，即可实现相应的应用程序。
 
-
-
-
+构建完成的**组合Blockly**本身，即是一个可运行程序，可以完成相关任务；同时，我们也会提供**组合Blockly**对应的程序代码，使用者将代码转移至与程序语言对应的文件中，亦可以运行程序，完成相关任务。
 
 ## 项目的实现和进展
 
