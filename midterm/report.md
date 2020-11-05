@@ -226,6 +226,8 @@ Java Field主要包含两种变量，一种是Private变量，一种是Public的
 
 
 
+
+
 ####（三）在Member Method和Field和Block对应的基础上，实现特殊的Class成员对应关系
 
 我们还需要解决的对应是Constructor和Static Methods和Static Fields和Blockly的关系
