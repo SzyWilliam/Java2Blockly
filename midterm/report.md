@@ -235,6 +235,155 @@ Input/Output
 
 最后再来一些实现细节（Math
 
+支持子集：  
+
+我们共支持五种Block和java代码之间的转换。将五种Block分为三类，第一类是value类型，包括number block和text block；第二类是binary operator类型，包括math arithmetic block和logic ocmpare block；第三类是statement类型，包括print block，该block是唯一能够构成一条完整语句的block。
+
+1. Number block：  
+   
+   <img src="image/number_block_123.png" width="10%" height="10%">  
+
+   在number block中输入123就会在java中转成123。  
+2. Text block：  
+   
+   <img src="image/text_block_hello.png" width="20%" height="20%">  
+
+   在text block中输入hello world，就会在java中转成"hello world"。  
+3. Math arithmatic block：  
+   math arithmetic block支持+、-、×、÷、^五种运算，该block左右两边可以插入number block或math arithmetic block。  
+   
+   <img src="image/math_arithmetic_block1.png" width="20%" height="20%">   
+
+   若在block中输入123+123，这实际上是在math arithmetic block中生成了两个number block，并对其数值进行+运算，在Java中就会被转换为算式(123 + 123)。  
+   
+   <img src="image/math_arithmetic_block2.png" width="20%" height="20%">     
+
+   特别地，若在block中输入2^16，在Java中就会被转换为Math.pow(2,16)。  
+
+   <img src="image/math_arithmetic_block3.png" width="30%" height="30%">   
+
+   若一个block应用+运算，在其左边输入123，在右边拖入一个新的arithmetic block，应用×运算，并输入345和678，实际上是在一个math arithmetic block中内嵌了一个number block、另一个math arithmetic block及其内嵌的两个number block，在Java中就会被转换为算式(123 + (345 * 678))。 
+   
+   <img src="image/math_arithmetic_block4.png" width="40%" height="40%">  
+
+   若一个block应用+运算，在其左边拖入一个新的math arithmetic block，应用×运算，输入12、13，右边也拖入一个新的math arithmatic block,应用÷运算，输入14、15，实际上是在一个math arithmetic block中内嵌了两个arithmetic block和四个number block，在Java中就会被转换为算式((12 * 13) +(14 / 15))。  
+
+   以此类推，我们可以对更多的number block和math arithmetic block的进行组合，实现更复杂算式。  
+4. Logic compare block：  
+   logic compare block支持＝、≠、＜、≤、＞、≥六种运算，该block左右两边可以插入（number block，number block），（number block，math arithmetic block），（math arithmetic block，math arithmetic block），（text block，text block）四种组合。  
+   
+   <img src="image/logic_compare_block1.png" width="20%" height="20%">   
+
+   若一个block应用=运算，左边输入123，右边输入123，在Java中就会被转换为(123 == 123)。  
+   
+   <img src="image/logic_compare_block2.png" width="30%" height="30%">   
+
+   若一个block应用>运算，左边输入123，右边拖入一个应用+运算的math arithmetic block并输入23和45，在Java中就会被转换为(123 > (23 + 45))。  
+
+   <img src="image/logic_compare_block3.png" width="40%" height="40%">   
+
+   若一个block应用≤运算，在左边拖入一个应用+运算的math arithmetic block并输入12和34，在右边拖入一个应用×运算的math arithmetic block并输入12和34，在Java中就会被转换为((12 + 34) <= (12 * 34))。  
+
+   特别地，当block的左右两边是text block时，会进行字符串比较。  
+
+   <img src="image/logic_compare_block4.png" width="30%" height="30%">  
+
+   若对block应用=运算，并在其左右拖入两个text block并输入123，在Java中就会被转换为("123".eqauls("123"))。  
+
+   <img src="image/logic_compare_block5.png" width="30%" height="30%">  
+
+   若对block应用＞运算，并在其左右拖入两个text block并输入123，在Java中就会被转换为("123".compareTo("123") > 0)。  
+5. Print block：  
+   
+   <img src="image/print1.png" width="15%" height="15%">   
+
+   print block 可以和其他四种block组合，在Java中会被转换为System.out.print()语句。  
+
+   <img src="image/print2.png" width="20%" height="20%">   
+
+   另外，print block也可以和自己拼接，组合成多条打印语句。  
+
+实现架构：
+
+实现细节：  
+以math arithmetic block为例：  
+1. 构造函数：共有三个成员变量，分别代表该block的左右子节点及其运算符。
+	```
+	private Math_arithmetic_node(Block_node val_A, Block_node val_B, String op) {
+		this.val_A = val_A;
+		this.val_B = val_B;
+		this.op = op;
+	}
+	```
+2. 静态工厂方法：  
+	在该方法中传入待解析的block node，获得它的所有子节点列表nodeList，再通过node.getTextContent的方法获得待解析运算符。通过nodeList的长度，判断该block有几个操作数，调用构造函数创建其对应的Math_arithmetic_node实例并返回。
+	```
+	String op = nodeList.item(1).getTextContent(); // 待解析运算符
+	if (nodeNum == 2) { // 只有运算符
+    	return new Math_arithmetic_node(null, null, op);
+	} else if (nodeNum == 4) { // 有一个操作数
+        Node currChild = nodeList.item(3);
+        String type = currChild.getAttributes().getNamedItem("name").getTextContent();
+        if (type.equals("A")) { // 左操作数
+            return new Math_arithmetic_node(Parser.parseNodeToBlockNode(currChild.getChildNodes().item(1), validTypeSet), null, op);
+        } else { // 右操作数
+            return new Math_arithmetic_node(null, Parser.parseNodeToBlockNode(currChild.getChildNodes().item(1), validTypeSet), op);
+        }
+    } else { // 两个操作数
+        Node val_A = nodeList.item(3).getChildNodes().item(1);
+        Node val_B = nodeList.item(5).getChildNodes().item(1);
+        return new Math_arithmetic_node(Parser.parseNodeToBlockNode(val_A, validTypeSet), Parser.parseNodeToBlockNode(val_B, validTypeSet), op);
+    }
+	```
+3. toJavaCode():  
+   在该方法中生成block对应的Java代码。如果block的左右子节点不为空，就递归地调用它们的toJavaCode方法，获取子节点对应的Java代码。再根据运算符对其进行拼接，拼接好的字符串即是该block对应的Java代码。
+	```
+	public String toJavaCode() {
+        String opToJava = "";
+        String a = "";
+        String b = "";
+
+        if (val_A != null) {
+            a = val_A.toJavaCode();
+        }
+        if (val_B != null) {
+            b = val_B.toJavaCode();
+        }
+
+        switch (op) {
+            case "ADD":
+                opToJava = "(" + a + " + " + b + ")";
+                break;
+            case "MINUS":
+                opToJava = "(" + a + " - " + b + ")";
+                break;
+            case "MULTIPLY":
+                opToJava = "(" + a + " * " + b + ")";
+                break;
+            case "DIVIDE":
+                opToJava = "(" + a + " / " + b + ")";
+                break;
+            case "POWER":
+                opToJava = "Math.pow(" + a + ", " + b + ")";
+                break;
+        }
+        return opToJava;
+    }
+	```
+4. toXML():  
+   在该方法中将Math_arithmetic_node实例重新转为xml。通过调用其左右子节点的toXML方法获取子节点的xml字符串，并对其进行拼接，即可获得该node对应的xml字符串。
+	```
+	public String toXML() {
+        String a = val_A.toXML();
+        String b = val_B.toXML();
+        return "<block type=\"math_arithmetic\" id=\"\" x=\"\" y=\"\">" +
+                "<field name=\"OP\">" + op + "</field>" +
+                "<value name=\"A\">" + a + "</value>" +
+                "<value name=\"B\">" + b + "</value>" +
+                "</block>";
+    }
+	```
+
 ###一个Java转Block的代码示例 （宋子阳）
 
 
