@@ -8,6 +8,68 @@
 
 ### Blockly简介 & Blockly特点特性
 
+Blockly是为网络和移动应用程序添加可视代码编辑器的应用。 Blockly编辑器使用互锁的图形块来表示代码概念，如变量，逻辑表达式，循环等。它使得用户可以不必关注语法细节就能直接按照编程原则进行编程。
+
+
+
+在Blockly丰富的功能中，我们列举以下几个突出的优势：
+
+- **可导出代码**。用户可以将基于块编写的程序转换成通用编程语言，并平滑过渡到基于文本的编程。
+- **开源**。关于Blockly的一切都是开放的：您可以用您自己的方式修改它，并在您自己的网站中使用它。
+- **精简**。 Blockly不仅仅是玩具，您可以用它实现复杂的编程任务，例如在单个块中计算标准偏差。
+- **国际化**。 Blockly已被翻译成40多种语言，包括阿拉伯语和希伯来语的从右到左阅读的版本。
+
+
+
+Sample：
+
+​		以下是一块自定义块：
+
+![text-length](image\text-length.png)
+
+​		
+
+​		这个块由以下JavaScript语言定义：
+
+```
+Blockly.Blocks['string_length'] = {
+  init: function() {
+    this.appendValueInput('VALUE')
+        .setCheck('String')
+        .appendField('length of');
+    this.setOutput(true, 'Number');
+    this.setColour(160);
+    this.setTooltip('Returns number of letters in the provided text.');
+    this.setHelpUrl('http://www.w3schools.com/jsref/jsref_length_string.asp');
+  }
+};
+```
+
+​		或者是以下Json语句：
+
+```
+Blockly.Blocks['string_length'] = {
+  init: function() {
+    this.jsonInit({
+      "message0": 'length of %1',
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "VALUE",
+          "check": "String"
+        }
+      ],
+      "output": "Number",
+      "colour": 160,
+      "tooltip": "Returns number of letters in the provided text.",
+      "helpUrl": "http://www.w3schools.com/jsref/jsref_length_string.asp"
+    });
+  }
+};
+```
+
+
+
 ```
 https://developers.google.com/blockly/guides/overview
 1. 将页面的重要内容概括和摘要整理到这里
@@ -17,8 +79,30 @@ https://developers.google.com/blockly/guides/overview
 ### 基于Blockly的平台 
 
 * App Inventor
+
+  App Inventor 原是Google实验室（Google Lab）的一个子计划，由一群Google工程师和勇于挑战的Google使用者共同参与设计完成；现在以完全移交MIT，由其运营。 App Inventor是一个完全基于云端的在线开发Android编程环境，抛弃复杂的程式代码而使用积木式的堆叠法来完成Android程式，使得所有人，包括孩子们，都可以在浏览器上构造具有全部功能的手机、平板app。
+
+  这款软件基于Blockly开发，实现了对安卓移动端应用的自定义块，同时作为一款程序设计教育app，其搭建的界面也更加符合儿童趣味。
+
+  
+
 * Scratch Game
+
+  Scratch是麻省理工学院开发的一款简易图形化编程工具。几乎所有的孩子都会一眼喜欢上这个软件。建立起做编程的欲望。建立程序的过程，用到涂鸦，录音，找图片这些有趣的过程。孩子的成品可以通过软件直接发布到官方网站上。官方网站给每个注册用户开通了一个个人空间，放置发布的程序。用户发布后的程序，在官网可以找到。制作中的程序只能在软件环境下运行，发布后的程序则是在网页内运行的。就是说，孩子们的作品可以通过网络被无数人看到。官方网站具有交友和评论的功能。国内亦有类似官网发布程序后在网页内运行的网站，方便国内爱好者和孩子们对作品进行交流。
+
+  
+
 * Blockly Game
+
+  Blockly Game是一系列用Blockly搭建的有助于编程教学的教育游戏。它专为那些之前没有接触过计算机编程孩子们设计， 以利用积木式编程来解决趣味问题的形式帮助训练学生们的计算机科学认知和能力。
+
+  ![blockly game.png](image\blockly game.png)
+
+  当完成了这些形式多样而由浅入深的游戏，玩家就做好了开始传统文本式编程的准备。
+
+  可以说，Blockly Game就是专门设计的Blockly 实例。
+
+  
 
 ```
 查看相应的网站
@@ -28,6 +112,22 @@ https://developers.google.com/blockly/guides/overview
 ```
 
 ### 相关的论文
+
+- #### Ten Things We’ve Learned from Blockly        
+
+  在过去对的四年里，Blockly的团队已经在积木式编程的领域学到了很多教训，所以总结了十点Bockly团队或者别的开发者都共同犯过的错误，以供后面的开发者在实践前有所注意。
+
+  
+
+- #### Tips for Creating a Block Language with Blockly
+
+  Blockly是一个开源库，使得用户和开发者可以很容易地在一个app里实现添加积木的视觉式编程。它被设计得非常灵活，并且支持很多不同的性质。它在动画编程、故事脚本创作、机器人操控，甚至是生成合法文档等领域都大展身手。但是Blockly它自己并不是一种语言，开发者们只是用Blockly来创造自己的语言。所以当开发者们用Blockly制作app时，应该十分仔细地考虑块的样式，要用哪些块，以及对他们用户来说合适的API和语言特色。本文即是对此过程提供建议。
+
+  
+
+- #### 基于blockly的机器学习   
+
+  随着网络技术的发展和计算机设备在家庭、学校的普及，编程的门槛越来越低，因此许多对象为未接触过编程的初学者的软件技术出现，其中，可视化编程是编程入门的得力工具，Blockly就是其中之一。Blockly可以以块状图形堆叠来创建程序。每个块状图形都是程序的一部分，可以组合它们以建立简单的功能，然后结合一个个简单的功能来编写程序。只需要拖动鼠标来将不同的代码块组合起来，不需要敲击键盘便可以得到合适的代码。机器学习的概念或许很陌生，但是人工智能在许多领域打败传统人类的事件所有人应该都听说过。机器学习便是人工智能的核心，他通过专门研究计算机如何通过大量训练来模拟或实现人类的学习行为，掌握新的知识或技术，重构已经有的知识结构，持续提高自己的性能。使用Blockly进行机器学习研究，使非本专业或对机器学习感兴趣的入门者可以进行研究和使用。很多人认为机器学习需要复杂而繁琐的程序，使用Blockly，即使没有碰过代码的人也可以在拖动块中轻松进行机器学习。目前，Blockly经常用于中小学信息技术课程的编程学习，由于代码程序打包，图形编程工具的优势越来越大。Blockly是基于web平台的图形编程工具，可以在任何系统平台上进行在线和离线版本操作的编程，并可以在教室主机现场构建服务器平台、web界面实时编程、测试编程结果。还可以用于中小学信息技术课程中对机器学习感兴趣的学生练习简单的机器学习。本文探讨了如何将Blockly与机器学习相结合。
 
 ```
 三篇论文
