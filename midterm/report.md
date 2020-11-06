@@ -154,14 +154,74 @@ class SimpleConvNet:
 
 ## 项目的实现和进展
 
-###垂直领域的定义：爬虫 （孙颢、王中亮）
+###垂直领域的定义：爬虫
 
-```
-利用已有的Blockly的平台内容，搭建一个简单的垂直领域例子
-爬虫模块（Python）
-实现了三个函数，三个函数的内容是什么，完成的功能是什么，是怎么定制成block的
+我们利用已有的Blockly的平台内容，搭建了一个简单的基于python的爬虫模块。
+
+我们实现了以下的函数并且创建了相应的block:
+
+*getPage(url):向url发送请求，获取页面和相应
+*getHtml(page):解析获取page的html
+*getElement(page,elementName):获取page html中的所有elementName元素，作为列表返回。
+
+```javascript
+Blockly.Blocks['web_init'] = {
+    init: function() {
+        this.appendDummyInput()
+            .appendField("init");
+        this.setNextStatement(true, null);
+        this.setColour(230);
+        this.setTooltip("");
+        this.setHelpUrl("");
+    }
+};
+Blockly.Blocks['web_getPage'] = {
+    init: function() {
+        this.appendValueInput("url")
+            .setCheck("String")
+            .appendField("getPage")
+            .appendField("url");
+        this.setOutput(true, null);
+        this.setColour(230);
+        this.setTooltip("");
+        this.setHelpUrl("");
+    }
+};
+Blockly.Blocks['web_getHtml'] = {
+    init: function() {
+        this.appendValueInput("page")
+            .appendField("getHtml")
+            .appendField("page");
+        this.setOutput(true, null);
+        this.setColour(230);
+        this.setTooltip("");
+        this.setHelpUrl("");
+    }
+};
+Blockly.Blocks['web_getElement'] = {
+    init: function() {
+        this.appendValueInput("page")
+            .setCheck(null)
+            .appendField("page");
+        this.appendValueInput("element")
+            .setCheck(null)
+            .appendField("element");
+        this.setInputsInline(true);
+        this.setOutput(true, null);
+        this.setColour(230);
+        this.setTooltip("");
+        this.setHelpUrl("");
+    }
+};
 ```
 
+下面是本例的一个简单应用
+
+<img src="image/webdemo" alt="webdemo" style="zoom: 50%;" />
+
+运行生成的代码，能够成功读取网页信息
+
+<img src="image/weboutput" alt="weboutput" style="zoom: 50%;" />
 ###一个简单的XML2Java的demo （潘星宇、俞哲轩）
 
 实现的功能描述XML 2 JAVA子集的一个，目的是为了XXX。这个子集包括了XXX
