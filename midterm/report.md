@@ -217,11 +217,12 @@ Blockly.Blocks['web_getElement'] = {
 
 下面是本例的一个简单应用
 
-<img src="image/webdemo" alt="webdemo" style="zoom: 50%;" />
+<img src="image/webdemo.jpg" alt="webdemo" style="zoom: 50%;" />
 
 运行生成的代码，能够成功读取网页信息
 
-<img src="image/weboutput" alt="weboutput" style="zoom: 50%;" />
+<img src="image/weboutput.jpg" alt="weboutput" style="zoom: 50%;" />
+
 ###一个简单的XML2Java的demo （潘星宇、俞哲轩）
 
 实现的功能描述XML 2 JAVA子集的一个，目的是为了XXX。这个子集包括了XXX
