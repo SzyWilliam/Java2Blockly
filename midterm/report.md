@@ -96,7 +96,7 @@ https://developers.google.com/blockly/guides/overview
 
   Blockly Game是一系列用Blockly搭建的有助于编程教学的教育游戏。它专为那些之前没有接触过计算机编程孩子们设计， 以利用积木式编程来解决趣味问题的形式帮助训练学生们的计算机科学认知和能力。
 
-  ![blockly game.png](image/blockly game.png)
+  ![blockly_game.png](image/blockly_game.png)
 
   当完成了这些形式多样而由浅入深的游戏，玩家就做好了开始传统文本式编程的准备。
 
