@@ -48,6 +48,10 @@ https://developers.google.com/blockly/guides/overview
 
 此外，我们希望进一步拓展这个平台，通过模块组织和层级分化的方式，从高到低提升Blockly的表现能力。在低的层面上，能够支持用户直接修改Block背后的代码，通过给最原生的Access来获得最灵活的定制能力。在高的层面上，能够支持用户通过拖拽和组合Block来模块化定制功能，从而实现强封装和易于使用的功能。
 
+### 时代的趋势：编程的通用型提高，门槛降低
+
+在二十一世纪的信息化时代，编程的重要性毋庸置疑。但是更加重要的是，编程任务在走出传统的生产环境，融入到各行各业当中。
+
 ```
 1. Blockly的应用领域比较狭窄：教育领域
 2. 希望拓展Blockly到具有生产能力和解决问题能力的场景中来
@@ -225,90 +229,221 @@ Blockly.Blocks['web_getElement'] = {
 
 ###一个简单的XML2Java的demo （潘星宇、俞哲轩）
 
-实现的功能描述XML 2 JAVA子集的一个，目的是为了XXX。这个子集包括了XXX
+**问题描述：**
 
-具体的实现架构：
+Blockly 使用者通过拖动 ToolBar 中各种不同的 Block 进行组合，形成一段代码块。Blockly 提供了将这些组合起来的 Block 转为 XML 的工具，通过组合模式将使用者搭建的积木转换为一段 XML，需要完成的工作则是将这一段 XML 转换为 Java 代码。
+$$
+XML —(program)—> JavaCode
+$$
+如<img src="./image/Block1+2.png" alt="image-20201105201539612" style="zoom: 50%;" />这一积木块的组合对应的 XML 如下：
 
-Input/Output
+```xml
+<xml xmlns="https://developers.google.com/blockly/xml">
+    <block type="math_arithmetic" id="kEM-l?saK!c*to)OC25D" x="65" y="260">
+        <field name="OP">ADD</field>
+        <value name="A">
+            <block type="math_number" id="c5R{{/S]E5[2z[vEe79f">
+                <field name="NUM">1</field>
+            </block>
+        </value>
+        <value name="B">
+            <block type="math_number" id="~R11dx!*0INIHuy)=YJV">
+                <field name="NUM">2</field>
+            </block>
+        </value>
+    </block>
+</xml>
+```
 
-代码的组织架构（interface是怎么样的）
+\<block> 标签中 id, x, y 三个属性被前端用于展示（id 用于唯一标识一个block；x,y用于表示block在页面中的位置），与输出的 java code 无关。
 
-最后再来一些实现细节（Math
+程序的目标就是通过解析这个 XML 文件，生成与之对应的 java code，如上述 XML 的目标代码为：
 
-支持子集：  
+```java
+1 + 2
+```
+
+如 <img src="./image/recursive-print.png" alt="image-20201105202741919" style="zoom:50%;" />对应的 XML 如下：(block 的 id,x,y 属性已省略)
+
+```xml
+<xml xmlns="https://developers.google.com/blockly/xml">
+    <block type="text_print">
+        <value name="TEXT">
+            <block type="logic_compare">
+                <field name="OP">EQ</field>
+                <value name="A">
+                    <block type="math_arithmetic">
+                        <field name="OP">ADD</field>
+                        <value name="A">
+                            <block type="math_number">
+                                <field name="NUM">1</field>
+                            </block>
+                        </value>
+                        <value name="B">
+                            <block type="math_number">
+                                <field name="NUM">2</field>
+                            </block>
+                        </value>
+                    </block>
+                </value>
+                <value name="B">
+                    <block type="math_number">
+                        <field name="NUM">3</field>
+                    </block>
+                </value>
+            </block>
+        </value>
+    </block>
+</xml>
+```
+
+对应的 java code 为：
+
+```java
+System.out.println(1 + 2 == 3);
+```
+
+
+
+**支持子集：**  
 
 我们共支持五种Block和java代码之间的转换。将五种Block分为三类，第一类是value类型，包括number block和text block；第二类是binary operator类型，包括math arithmetic block和logic ocmpare block；第三类是statement类型，包括print block，该block是唯一能够构成一条完整语句的block。
 
 1. Number block：  
-   
-   <img src="image/number_block_123.png" width="10%" height="10%">  
+
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/number_block_123.png" width="10%" height="10%">  
 
    在number block中输入123就会在java中转成123。  
+
 2. Text block：  
-   
-   <img src="image/text_block_hello.png" width="20%" height="20%">  
+
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/text_block_hello.png" width="20%" height="20%">  
 
    在text block中输入hello world，就会在java中转成"hello world"。  
+
 3. Math arithmatic block：  
    math arithmetic block支持+、-、×、÷、^五种运算，该block左右两边可以插入number block或math arithmetic block。  
-   
-   <img src="image/math_arithmetic_block1.png" width="20%" height="20%">   
+
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/math_arithmetic_block1.png" width="20%" height="20%">   
 
    若在block中输入123+123，这实际上是在math arithmetic block中生成了两个number block，并对其数值进行+运算，在Java中就会被转换为算式(123 + 123)。  
-   
-   <img src="image/math_arithmetic_block2.png" width="20%" height="20%">     
+
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/math_arithmetic_block2.png" width="20%" height="20%">     
 
    特别地，若在block中输入2^16，在Java中就会被转换为Math.pow(2,16)。  
 
-   <img src="image/math_arithmetic_block3.png" width="30%" height="30%">   
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/math_arithmetic_block3.png" width="30%" height="30%">   
 
    若一个block应用+运算，在其左边输入123，在右边拖入一个新的arithmetic block，应用×运算，并输入345和678，实际上是在一个math arithmetic block中内嵌了一个number block、另一个math arithmetic block及其内嵌的两个number block，在Java中就会被转换为算式(123 + (345 * 678))。 
-   
-   <img src="image/math_arithmetic_block4.png" width="40%" height="40%">  
+
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/math_arithmetic_block4.png" width="40%" height="40%">  
 
    若一个block应用+运算，在其左边拖入一个新的math arithmetic block，应用×运算，输入12、13，右边也拖入一个新的math arithmatic block,应用÷运算，输入14、15，实际上是在一个math arithmetic block中内嵌了两个arithmetic block和四个number block，在Java中就会被转换为算式((12 * 13) +(14 / 15))。  
 
    以此类推，我们可以对更多的number block和math arithmetic block的进行组合，实现更复杂算式。  
+
 4. Logic compare block：  
    logic compare block支持＝、≠、＜、≤、＞、≥六种运算，该block左右两边可以插入（number block，number block），（number block，math arithmetic block），（math arithmetic block，math arithmetic block），（text block，text block）四种组合。  
-   
-   <img src="image/logic_compare_block1.png" width="20%" height="20%">   
+
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/logic_compare_block1.png" width="20%" height="20%">   
 
    若一个block应用=运算，左边输入123，右边输入123，在Java中就会被转换为(123 == 123)。  
-   
-   <img src="image/logic_compare_block2.png" width="30%" height="30%">   
+
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/logic_compare_block2.png" width="30%" height="30%">   
 
    若一个block应用>运算，左边输入123，右边拖入一个应用+运算的math arithmetic block并输入23和45，在Java中就会被转换为(123 > (23 + 45))。  
 
-   <img src="image/logic_compare_block3.png" width="40%" height="40%">   
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/logic_compare_block3.png" width="40%" height="40%">   
 
    若一个block应用≤运算，在左边拖入一个应用+运算的math arithmetic block并输入12和34，在右边拖入一个应用×运算的math arithmetic block并输入12和34，在Java中就会被转换为((12 + 34) <= (12 * 34))。  
 
    特别地，当block的左右两边是text block时，会进行字符串比较。  
 
-   <img src="image/logic_compare_block4.png" width="30%" height="30%">  
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/logic_compare_block4.png" width="30%" height="30%">  
 
    若对block应用=运算，并在其左右拖入两个text block并输入123，在Java中就会被转换为("123".eqauls("123"))。  
 
-   <img src="image/logic_compare_block5.png" width="30%" height="30%">  
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/logic_compare_block5.png" width="30%" height="30%">  
 
    若对block应用＞运算，并在其左右拖入两个text block并输入123，在Java中就会被转换为("123".compareTo("123") > 0)。  
+
 5. Print block：  
-   
-   <img src="image/print1.png" width="15%" height="15%">   
+
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/print1.png" width="15%" height="15%">   
 
    print block 可以和其他四种block组合，在Java中会被转换为System.out.print()语句。  
 
-   <img src="image/print2.png" width="20%" height="20%">   
+   <img src="/Users/william/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/9dd8e9d6daca5c75244bf9702910287c/Message/MessageTemp/264e9c5f7750189694a288a926026afc/File/midterm/image/print2.png" width="20%" height="20%">   
 
    另外，print block也可以和自己拼接，组合成多条打印语句。  
 
-实现架构：
+   
+
+**实现架构：**
+
+**（1）**```class Parser```
+
+程序的核心函数 ```parseXMLtoJavaCode(String xmlFilePath)```位于类 ```Parser```中。
+
+```java
+public class Parser {
+    public static List<String> parseXMLtoJavaCode(String xmlFilePath){...}
+
+    public static Block_node parseNodeToBlockNode(Node node, 
+                                           Set<String> validTypeSet){...}
+    private static Node getXMLRootNode(String xmlFilePath){...}
+}
+```
+
+**①** ```getXMLRootNode(String xmlFilePath){...}``` 利用已有库解析目标XML文件，并返回根节点。
+
+**②** ```parseNodeToBlockNode(Node node, Set<String> validTypeSet){...}``` 接受一个 XML 中 Node，并返回与之对应的 Block_node 。这个方法将被递归调用。
+
+**③** ```parseXMLtoJavaCode(String xmlFilePath){...}``` 先调用 ```getXMLRootNode``` 得到 XML 根节点，再从根节点开始递归解析。
+
+<u>注：XML中可能包含不止一个代码块，因此方法的返回值为 ```List<String>``` ，如：</u>
+
+<img src="/image/two-part-blocks.png" alt="image-20201105204914244" style="zoom:50%;" />
+
+对应 XML 解析后返回一个 ```List res```，则 ```res``` 包含两个字符串：
+
+```java
+(1 + 2) == 3
+```
+
+```java
+System.out.println("Hello world");\nSystem.out.println(10);\n
+```
+
+
+
+**(2)** ```interface Block_node``` 
+
+此接口将被不同类型的具体 node 实现。其中包含两个方法：
+
+```java
+    String toJavaCode();
+    String toXML();
+```
+
+由于对于一个运算而言，运算的左值与右值本身也有可能是一个运算。使用接口就可以有效解决这个问题。
+
+
+
+**(3)** **specific classes** that implements ```Block_node```
+
+共有五个类实现了接口，分别对应支持的五种 block ，包括 ```Math_number_node```, ```Math_arithmetic_node```, ```Logic_compare_node```, ```Text_node```, ```Text_print_node```。每一个具体类型都实现了各自具体的 ```toJavaCode()``` 与 ```toXML()``` 方法。
+
+
+
+
+
+
 
 实现细节：  
 以math arithmetic block为例：  
 1. 构造函数：共有三个成员变量，分别代表该block的左右子节点及其运算符。
-	```
+	```java
 	private Math_arithmetic_node(Block_node val_A, Block_node val_B, String op) {
 		this.val_A = val_A;
 		this.val_B = val_B;
@@ -317,7 +452,7 @@ Input/Output
 	```
 2. 静态工厂方法：  
 	在该方法中传入待解析的block node，获得它的所有子节点列表nodeList，再通过node.getTextContent的方法获得待解析运算符。通过nodeList的长度，判断该block有几个操作数，调用构造函数创建其对应的Math_arithmetic_node实例并返回。
-	```
+	```java
 	String op = nodeList.item(1).getTextContent(); // 待解析运算符
 	if (nodeNum == 2) { // 只有运算符
     	return new Math_arithmetic_node(null, null, op);
@@ -337,7 +472,7 @@ Input/Output
 	```
 3. toJavaCode():  
    在该方法中生成block对应的Java代码。如果block的左右子节点不为空，就递归地调用它们的toJavaCode方法，获取子节点对应的Java代码。再根据运算符对其进行拼接，拼接好的字符串即是该block对应的Java代码。
-	```
+	```java
 	public String toJavaCode() {
         String opToJava = "";
         String a = "";
@@ -372,7 +507,7 @@ Input/Output
 	```
 4. toXML():  
    在该方法中将Math_arithmetic_node实例重新转为xml。通过调用其左右子节点的toXML方法获取子节点的xml字符串，并对其进行拼接，即可获得该node对应的xml字符串。
-	```
+	```java
 	public String toXML() {
         String a = val_A.toXML();
         String b = val_B.toXML();
