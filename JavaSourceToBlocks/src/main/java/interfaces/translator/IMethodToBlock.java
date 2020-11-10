@@ -1,4 +1,6 @@
-package interfaces;
+package interfaces.translator;
+
+import interfaces.methodBlock.MethodBlock;
 
 import java.lang.reflect.Method;
 
@@ -12,5 +14,5 @@ import java.lang.reflect.Method;
  * @since 2020.11.10
  */
 public interface IMethodToBlock {
-    public Block translateJavaMethodToBlock(Method javaMethod);
+    public MethodBlock translateJavaMethodToBlock(Method javaMethod);
 }

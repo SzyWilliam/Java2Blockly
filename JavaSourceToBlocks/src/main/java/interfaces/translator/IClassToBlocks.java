@@ -1,5 +1,7 @@
-package interfaces;
+package interfaces.translator;
 
+
+import interfaces.methodBlock.MethodBlock;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -12,6 +14,6 @@ import java.util.Map;
  * @version 1.0
  * @since 2020.11.10
  */
-public interface IClassToBlockly {
-    public Map<Method, Block> translateClassToBlocklyWorkspace(Class<?> targetClass);
+public interface IClassToBlocks {
+    public Map<Method, MethodBlock> translateClassToBlocklyWorkspace(Class<?> targetClass);
 }
