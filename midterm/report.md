@@ -1,37 +1,43 @@
-# 报告和答辩
+# 中期答辩报告
+
+>**课题名称**
+>
+>基于blockly可视化积木编程的Java领域代码自动生成系统
+>
+>**所属学科**
+>
+>计算机科学与技术
+>
+>**指导教师 **
+>
+> 戴开宇
+
+
 
 [TOC]
 
 
 
-## 前期的资料调研：Blockly和相关的平台 （张丰泽、王中亮）
+## 前期的资料调研：Blockly和相关的平台
 
 ### Blockly简介 & Blockly特点特性
 
 Blockly是为网络和移动应用程序添加可视代码编辑器的应用。 Blockly编辑器使用互锁的图形块来表示代码概念，如变量，逻辑表达式，循环等。它使得用户可以不必关注语法细节就能直接按照编程原则进行编程。
 
-
-
 在Blockly丰富的功能中，我们列举以下几个突出的优势：
 
 - **可导出代码**。用户可以将基于块编写的程序转换成通用编程语言，并平滑过渡到基于文本的编程。
-- **开源**。关于Blockly的一切都是开放的：您可以用您自己的方式修改它，并在您自己的网站中使用它。
-- **精简**。 Blockly不仅仅是玩具，您可以用它实现复杂的编程任务，例如在单个块中计算标准偏差。
+- **开源**。关于Blockly的一切都是开放的：可以自己修改并且扩充定义。
+- **精简**。 Blockly不仅仅是玩具，可以用它实现复杂的编程任务，例如在单个块中计算标准偏差。
 - **国际化**。 Blockly已被翻译成40多种语言，包括阿拉伯语和希伯来语的从右到左阅读的版本。
 
 
 
-Sample：
+以下是一块自定义块：![text-length](image/text-length.png)
 
-​		以下是一块自定义块：
+这个块由以下JavaScript语言定义：
 
-![text-length](image/text-length.png)
-
-​		
-
-​		这个块由以下JavaScript语言定义：
-
-```
+```json
 Blockly.Blocks['string_length'] = {
   init: function() {
     this.appendValueInput('VALUE')
@@ -47,7 +53,7 @@ Blockly.Blocks['string_length'] = {
 
 ​		或者是以下Json语句：
 
-```
+```json
 Blockly.Blocks['string_length'] = {
   init: function() {
     this.jsonInit({
@@ -70,17 +76,13 @@ Blockly.Blocks['string_length'] = {
 
 
 
-```
-https://developers.google.com/blockly/guides/overview
-1. 将页面的重要内容概括和摘要整理到这里
-2. 配有相应的图片和解释（block/workspace/js generator等重要元素）
-```
-
 ### 基于Blockly的平台 
+
+我们调研搜集了现有的程序的基于Blockly的平台，分析了他们的运用领域和方向。
 
 * App Inventor
 
-  App Inventor 原是Google实验室（Google Lab）的一个子计划，由一群Google工程师和勇于挑战的Google使用者共同参与设计完成；现在以完全移交MIT，由其运营。 App Inventor是一个完全基于云端的在线开发Android编程环境，抛弃复杂的程式代码而使用积木式的堆叠法来完成Android程式，使得所有人，包括孩子们，都可以在浏览器上构造具有全部功能的手机、平板app。
+  App Inventor 原是Google实验室（Google Lab）的一个子计划，由一群Google工程师和勇于挑战的Google使用者共同参与设计完成；现在以完全移交MIT，由其运营。 App Inventor是一个完全基于云端的在线开发Android编程环境，抛弃复杂的程式代码而使用积木式的堆叠法来完成Android程序，使得所有人，包括孩子们，都可以在浏览器上构造具有全部功能的手机、平板app。
 
   这款软件基于Blockly开发，实现了对安卓移动端应用的自定义块，同时作为一款程序设计教育app，其搭建的界面也更加符合儿童趣味。
 
@@ -104,12 +106,7 @@ https://developers.google.com/blockly/guides/overview
 
   
 
-```
-查看相应的网站
-每个平台的内容应该包含以下部分
-1. 平台的简单介绍 （是什么，提供了什么新的功能）
-2. 平台和Blockly之间的关系（如何基于Blockly，和Blockly有什么不同）
-```
+
 
 ### 相关的论文
 
@@ -129,14 +126,11 @@ https://developers.google.com/blockly/guides/overview
 
   随着网络技术的发展和计算机设备在家庭、学校的普及，编程的门槛越来越低，因此许多对象为未接触过编程的初学者的软件技术出现，其中，可视化编程是编程入门的得力工具，Blockly就是其中之一。Blockly可以以块状图形堆叠来创建程序。每个块状图形都是程序的一部分，可以组合它们以建立简单的功能，然后结合一个个简单的功能来编写程序。只需要拖动鼠标来将不同的代码块组合起来，不需要敲击键盘便可以得到合适的代码。机器学习的概念或许很陌生，但是人工智能在许多领域打败传统人类的事件所有人应该都听说过。机器学习便是人工智能的核心，他通过专门研究计算机如何通过大量训练来模拟或实现人类的学习行为，掌握新的知识或技术，重构已经有的知识结构，持续提高自己的性能。使用Blockly进行机器学习研究，使非本专业或对机器学习感兴趣的入门者可以进行研究和使用。很多人认为机器学习需要复杂而繁琐的程序，使用Blockly，即使没有碰过代码的人也可以在拖动块中轻松进行机器学习。目前，Blockly经常用于中小学信息技术课程的编程学习，由于代码程序打包，图形编程工具的优势越来越大。Blockly是基于web平台的图形编程工具，可以在任何系统平台上进行在线和离线版本操作的编程，并可以在教室主机现场构建服务器平台、web界面实时编程、测试编程结果。还可以用于中小学信息技术课程中对机器学习感兴趣的学生练习简单的机器学习。本文探讨了如何将Blockly与机器学习相结合。
 
-```
-三篇论文
-概括每篇论文讲了什么（从摘要里面概括即可）
-```
 
 
 
-## 从Blockly拓展到Blockly2Java（宋子阳）
+
+## 从Blockly拓展到Blockly2Java
 
 ### 渴望解决的问题
 
@@ -148,24 +142,23 @@ https://developers.google.com/blockly/guides/overview
 
 此外，我们希望进一步拓展这个平台，通过模块组织和层级分化的方式，从高到低提升Blockly的表现能力。在低的层面上，能够支持用户直接修改Block背后的代码，通过给最原生的Access来获得最灵活的定制能力。在高的层面上，能够支持用户通过拖拽和组合Block来模块化定制功能，从而实现强封装和易于使用的功能。
 
+
+
 ### 时代的趋势：编程的通用型提高，门槛降低
 
-在二十一世纪的信息化时代，编程的重要性毋庸置疑。但是更加重要的是，编程任务在走出传统的生产环境，融入到各行各业当中。
+在二十一世纪的信息化时代，编程的重要性毋庸置疑。但是更加重要的是，编程任务在走出传统的生产环境，融入到各行各业当中。银行工作人员可能需要快速的报表账单计算生成软件，投行分析团队们可能也需要处理一些重要的数据。甚至是学校会用到排课软件，老师会用到排座位软件。自动化编程的解决办法正在深入生活的方方面面。但是编程的高门槛和专业性却限制了这样的一种深入——一个会计可能对计算报表的过程了如指掌，但是对Python语言一无所知。在这样的一种启发之下，Blockly语言以其特别的易用性和简单性进入了我们的视野。我们旨在通过Blockly开发这样的一个平台：它有强大的通用能力，使得它有足够的表达能力来完成足够复杂的任务。但它的门槛很低，一个能够描述算法但不知晓语言细节的人也能够很容易地完成编程任务。
 
-```
-1. Blockly的应用领域比较狭窄：教育领域
-2. 希望拓展Blockly到具有生产能力和解决问题能力的场景中来
-3. 拓展到Java语言（支持强类型语言，OOP和现有的库函数）
-4. 平台化和易扩展的的定制化
-```
+因此，项目的目标因此开始清晰：我们支持拖拽编程解决生产生活方案，同时提供一个通用的可定制平台，来使得开发人员能够定义各种用处的垂直领域工具箱，供需求者使用。
 
 
 
-## 项目的分析和总体介绍（宋子阳，俞哲轩）
+
+
+## 项目的分析和总体介绍
 
 ### 使用场景
 
-在许多任务驱动型的项目中，往往会要求工作人员进行一定量的技术性工作，以完成某些目标。但是这些技术性的工作，往往都是功能性的、且对于非专业人士来说，具有一定的上手难度——譬如编写一个网页爬虫脚本、搭建一个轻量级神经网络、制作一个简易的网页小游戏等。
+在许多任务驱动型的项目中，往往会要求工作人员进行一定量的技术性工作，以完成某些目标。但是这些技术性的工作，往往都是功能性的、且对于非专业人士来说，具有一定的上手难度——譬如编写一个网页爬虫脚本、搭建一个轻量级神经网络、制作一个简易的网页小游戏等。非专业人士擅长算法过程，他们可能重复了这样的过程几百次，但是却并不擅长用程序自动化这样的过程。
 
 我们期望将这些技术性工作“抽象化”、“模块化”、“Blockly化”，将程序复杂的代码实现，浓缩于一个个小巧精美的blockly积木中，允许我们的用户在没有太多编程基础的前提下，只要对于自己的任务有清晰的认识，即可用积木“搭建”出他需要的程序，并且成功运行、取得他所希望的结果。
 
@@ -228,7 +221,9 @@ class SimpleConvNet:
 
 <img src="image/CNN-2.jpeg" alt="CNN-2" style="zoom:67%;" />
 
-我们会在**Workspace**中，专门开辟一个**Neural Network Category**，将所有用来搭建神经网络的块放在其中，如`Affine`、`ReLU`、`Convolutional`、`Max Pooling`、`Softmax`、`Sigmoid`、`Tanh`等——只要你可能会使用到的，我们都会提供。而使用者，只需要拖动积木块，拼接在一起，输入必须的参数，就完成了搭建一个性能优越的神经网络。
+我们会在**Workspace**中，专门开辟一个**Neural Network Category**，将所有用来搭建神经网络的块放在其中，如`Affine`、`ReLU`、`Convolutional`、`Max Pooling`、`Softmax`、`Sigmoid`、`Tanh`等——只要你可能会使用到的，我们都会提供。而使用者，只需要拖动积木块，拼接在一起，输入必须的参数，就完成了搭建一个性能优越的神经网络。这样灵活和可定制化搭建神经网络的表达能力，就是我们的
+
+
 
 ### 目标用户
 
@@ -236,7 +231,9 @@ class SimpleConvNet:
 
 我们项目组确实会预先定义一些常用的功能块，但是这显然会被局限在一个较小的范围内，也无法为更多特定功能提供预定义好的积木块。而如果采取不断更新补充的方式的话，又会使工作量大大增加，且效率不高。
 
-因而，我们会提供一个**公共开发平台（Public Block Factory）**，允许既熟悉代码语法，又对Blockly开发有简单了解、或是乐意花简短的时间做了解的开发者，设计并上传自己定义的积木块。在我们项目组进行测试和审核之后，会加入相关任务的**Category**或者新建全新的**Category**用于添加这些新加入的积木块进入**Public Workspace**。
+因而，我们会提供一个**公共开发平台（Public Block Workspace）**，允许既熟悉代码语法，又对Blockly开发有简单了解、或是乐意花简短的时间做了解的开发者，设计并上传自己定义的积木块。在我们项目组进行测试和审核之后，会加入相关任务的**Category**或者新建全新的**Category**用于添加这些新加入的积木块进入**Public Workspace**。抑或是一个团队只需要聘请一个相关的技术人员，搭建出一个和任务有关的任务工具箱，供团队中其他没有相关经验的人使用。
+
+
 
 #### 开发者
 
@@ -250,11 +247,17 @@ class SimpleConvNet:
 
 （实现细节请参见：下一部分—一个Java转Block的代码示例）
 
+
+
 #### 使用者
 
 对于使用者来说，使用Blockly积木块开发应用程序非常简单，只需要在我们提供的**公共平台（Public Workspace）**上找到自己任务相关的积木块，根据程序逻辑逐块搭建，输入要求的相关参数，即可实现相应的应用程序。
 
 构建完成的**组合Blockly**本身，即是一个可运行程序，可以完成相关任务；同时，我们也会提供**组合Blockly**对应的程序代码，使用者将代码转移至与程序语言对应的文件中，亦可以运行程序，完成相关任务。
+
+
+
+
 
 ## 项目的实现和进展
 
@@ -264,9 +267,9 @@ class SimpleConvNet:
 
 我们实现了以下的函数并且创建了相应的block:
 
-*getPage(url):向url发送请求，获取页面和相应
-*getHtml(page):解析获取page的html
-*getElement(page,elementName):获取page html中的所有elementName元素，作为列表返回。
+* getPage(url):向url发送请求，获取页面和相应
+* getHtml(page):解析获取page的html
+* getElement(page,elementName): 获取page html中的所有elementName元素，作为列表返回。
 
 ```javascript
 Blockly.Blocks['web_init'] = {
@@ -327,7 +330,11 @@ Blockly.Blocks['web_getElement'] = {
 
 <img src="image/weboutput.jpg" alt="weboutput" style="zoom: 50%;" />
 
-###一个简单的XML2Java的demo （潘星宇、俞哲轩）
+
+
+
+
+###一个简单的XML2Java的demo 
 
 **问题描述：**
 
@@ -407,7 +414,7 @@ System.out.println(1 + 2 == 3);
 
 **支持子集：**  
 
-我们共支持五种Block和java代码之间的转换。将五种Block分为三类，第一类是value类型，包括number block和text block；第二类是binary operator类型，包括math arithmetic block和logic ocmpare block；第三类是statement类型，包括print block，该block是唯一能够构成一条完整语句的block。
+我们共支持五种Block和java代码之间的转换。将五种Block分为三类，第一类是value类型，包括number block和text block；第二类是binary operator类型，包括math arithmetic block和logic compare block；第三类是statement类型，包括print block，该block是唯一能够构成一条完整语句的block。
 
 1. Number block：  
 
@@ -503,7 +510,7 @@ public class Parser {
 
 <u>注：XML中可能包含不止一个代码块，因此方法的返回值为 ```List<String>``` ，如：</u>
 
-<img src="/image/two-part-blocks.png" alt="image-20201105204914244" style="zoom:50%;" />
+<img src="./image/two-part-blocks.png" alt="image-20201105204914244" style="zoom:50%;" />
 
 对应 XML 解析后返回一个 ```List res```，则 ```res``` 包含两个字符串：
 
@@ -536,12 +543,9 @@ System.out.println("Hello world");\nSystem.out.println(10);\n
 
 
 
-
-
-
-
-实现细节：  
+**实现细节：**  
 以math arithmetic block为例：  
+
 1. 构造函数：共有三个成员变量，分别代表该block的左右子节点及其运算符。
 	```java
 	private Math_arithmetic_node(Block_node val_A, Block_node val_B, String op) {
@@ -619,13 +623,11 @@ System.out.println("Hello world");\nSystem.out.println(10);\n
     }
 	```
 
-###一个Java转Block的代码示例 （宋子阳）
 
 
+###一个Java转Block的代码示例 
 
 我们实现了一个java Class向一个Blockly WorkSpace互转的功能。
-
-
 
 在Java中，一个简单的Class Definition可能包含以下的部分
 
@@ -780,11 +782,11 @@ public class Rectangle {
 
 对应的前端Block（第一个是构造函数，第二个是width的getter，第三个是一个member method）
 
-![custom_blocks](./image/custom_blocks.png)
+<img src="./image/custom_blocks.png" alt="custom_blocks" style="zoom:67%;" />
 
 对应的usage
 
-![custom_blocks_usage](./image/custom_blocks_usage.png)
+<img src="./image/custom_blocks_usage.png" alt="custom_blocks_usage" style="zoom:67%;" />
 
 这一段对应代码
 
